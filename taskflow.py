@@ -29,7 +29,7 @@ def add_task(title, priority="medium"):
     print(f"Task #{task['id']} added : {title}")
     
 def list_tasks():
-    """List all tasks with color-coded priorities."""
+    """List all tasks with colors AND emoji indicators."""
     data = load_tasks()
     if not data["tasks"]:
         print("No tasks yet. Add one with: taskflow add <title>")
@@ -39,16 +39,15 @@ def list_tasks():
     print("-" * 50)
     for task in data["tasks"]:
         status = "[DONE]" if task["completed"] else "[    ]"
-        # Color based on priority using ANSI codes
+        # Combined: Color AND emoji based on priority
         if task["priority"] == "high":
-            color = "\033[91m"  # Red
+            color, emoji = "\033[91m", "!!!"  # Red
         elif task["priority"] == "medium":
-            color = "\033[93m"  # Yellow
+            color, emoji = "\033[93m", "!!"  # Yellow
         else:
-            color = "\033[92m"  # Green
+            color, emoji = "\033[92m", "!!"  # Green
         reset = "\033[0m"
-        print(f"{status} #{task['id']} {color}{task['title']}{reset}")
-            
+        print(f"{status} {emoji} {color}#{task['id']} {task['title']}{reset}")
         
 def show_help():
     """Display detailed help information.
