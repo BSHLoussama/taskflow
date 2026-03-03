@@ -51,6 +51,21 @@ def show_help():
     print (" list               List all tasks ")
     print (" done <id>          Mark task as complete ")
     print (" delete <id>        Delete a task ")
+    
+def delete_task(task_id):
+    """Delete a task by its ID.
+    Args:
+        task_id: The ID of the task to delete
+    """
+    data = load_tasks()
+    original_count = len(data["tasks"])
+    data["tasks"] = [t for t in data["tasks"] if t["id"] != task_id]
+    
+    if len(data["tasks"]) < original_count:
+        save_tasks(data)
+        print(f"Task #{task_id} deleted.")
+    else:
+        print(f"Task #{task_id} not found.")
 
 def complete_task(task_id):
     """Mark a task as completed.
@@ -91,9 +106,15 @@ def main():
         add_task(title)
     elif command == "list":
         list_tasks()
+
     elif command == "done" and len(sys.argv) >= 3:
         task_id = int(sys.argv[2])
         complete_task(task_id)
+
+    elif command == "delete" and len (sys.argv) >= 3:
+        task_id = int(sys.argv[2])
+        delete_task(task_id)
+
     else:
         print(f"Unknown command: {command}")
     
