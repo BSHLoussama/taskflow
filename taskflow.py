@@ -90,6 +90,23 @@ def complete_task(task_id):
             print(f"Task #{task_id} marked as complete!")
             return
     print(f"Task #{task_id} not found")
+
+def search_tasks(query):
+    """Search tasks by title.
+    
+    Args:
+        query: Search string to match against task titles
+    """
+    data = load_tasks()
+    results = [t for t in data["tasks"]
+               if query.lower() in t["title"].lower()]
+    if not results:
+        print(f"No tasks found matching '{query}'")
+        return
+    print(f"Found {len(results)} task(s):")
+    for task in results:
+        status = "Done" if task["completed"] else "Pending"
+        print(f" [{status}] #{task['id']} {task['title']}")
     
 def main():
     """Main entry point for TaskFlow.
@@ -123,6 +140,9 @@ def main():
     elif command == "delete" and len (sys.argv) >= 3:
         task_id = int(sys.argv[2])
         delete_task(task_id)
+    elif command == "search" and len(sys.argv) >= 3:
+        query = " ".join(sys.argv[2:])
+        search_tasks(query)
 
     else:
         print(f"Unknown command: {command}")
