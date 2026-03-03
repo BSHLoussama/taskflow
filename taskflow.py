@@ -91,10 +91,6 @@ def complete_task(task_id):
             return
     print(f"Task #{task_id} not found")
     
-def buggy_function():
-    """This function has a critical but!"""
-    return 1 / 0 # Division by zero ~ will crash!
-    
 def main():
     """Main entry point for TaskFlow.
     
