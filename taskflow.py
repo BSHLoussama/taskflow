@@ -29,16 +29,24 @@ def add_task(title, priority="medium"):
     print(f"Task #{task['id']} added : {title}")
     
 def list_tasks():
-    """Display all tasks with their status."""
+    """List all tasks with emoji indicators ."""
     data = load_tasks()
     if not data["tasks"]:
         print("No tasks yet. Add one with: taskflow add <title>")
         return
+    
     print("\nYour Tasks:")
-    print("-" * 40)
+    print("-" * 50)
     for task in data["tasks"]:
-        status = "[x]" if task["completed"] else "[ ]"
-        print(f"{status} #{task['id']}  {task['title']} ({task['priority']})")
+        status = "Done" if task["completed"] else "Pending"
+        # Emoji based on priority
+        if task["priority"] == "high":
+            emoji = "!!!" # Urgent
+        elif task["priority"] == "medium":
+            emoji = "!!" # Important
+        else:
+            emoji = "!"  # Normal
+        print(f"[{status}] {emoji} Task #{task['id']}: {task['title']}")
         
 def show_help():
     """Display detailed help information.
