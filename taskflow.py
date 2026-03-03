@@ -38,7 +38,7 @@ def list_tasks():
     print("\nYour Tasks:")
     print("-" * 50)
     for task in data["tasks"]:
-        status = "[x]" if task["completed"] else "[ ]"
+        status = "[DONE]" if task["completed"] else "[    ]"
         # Color based on priority using ANSI codes
         if task["priority"] == "high":
             color = "\033[91m"  # Red
