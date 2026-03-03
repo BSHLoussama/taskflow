@@ -52,6 +52,21 @@ def show_help():
     print (" done <id>          Mark task as complete ")
     print (" delete <id>        Delete a task ")
 
+def complete_task(task_id):
+    """Mark a task as completed.
+    
+    Args:
+        task_id: The ID of the task to complete
+    """
+    data = load_tasks()
+    for task in data["tasks"]:
+        if task["id"] == task_id:
+            task["completed"] = True
+            save_tasks(data)
+            print(f"Task #{task_id} marked as complete!")
+            return
+    print(f"Task #{task_id} not found")
+    
 def main():
     """Main entry point for TaskFlow.
     
@@ -76,6 +91,9 @@ def main():
         add_task(title)
     elif command == "list":
         list_tasks()
+    elif command == "done" and len(sys.argv) >= 3:
+        task_id = int(sys.argv[2])
+        complete_task(task_id)
     else:
         print(f"Unknown command: {command}")
     
